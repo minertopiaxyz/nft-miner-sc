@@ -15,6 +15,8 @@ contract NFTV1 is
     OwnableUpgradeable
 {
     uint public VERSION;
+    uint public PRICE;
+    uint public MAX_SUPPLY;
 
     string public baseURL0;
     string public baseURL1;
@@ -81,19 +83,26 @@ contract NFTV1 is
         return string(abi.encodePacked(baseURL0, tokenId, baseURL1));
     }
 
-    function setup(address addrPool, address addrNR) public onlyOwner {
+    function setup(
+        address addrPool,
+        address addrNR,
+        uint price,
+        uint maxSupply
+    ) public onlyOwner {
         require(VERSION == 0);
         VERSION = 1;
         ADDRESS_POOL = addrPool;
         ADDRESS_NFTREWARD = addrNR;
         nftList.push(NFTData(0, 0, 0, 0));
+        PRICE = price;
+        MAX_SUPPLY = maxSupply;
     }
 
     function mint(address receiver) public payable {
-        uint amountCoin = 1e18;
+        uint amountCoin = PRICE;
         if (msg.sender != owner()) amountCoin = msg.value;
-        require(amountCoin == 1e18, "price requirement fail");
-        require(nftList.length <= 3333, "maximum 3333 nft");
+        require(amountCoin == PRICE, "price requirement fail");
+        require(nftList.length <= MAX_SUPPLY, "maximum supply reached");
 
         transferBalance();
 
@@ -105,7 +114,7 @@ contract NFTV1 is
 
     function powerUp(uint nftId) public payable {
         uint amountCoin = msg.value;
-        require(amountCoin >= 1e18, "minimum is 1 coin");
+        require(amountCoin > 0, "minimum is 1");
         require(nftId > 0 && nftId <= nftList.length, "out of index");
 
         transferBalance();

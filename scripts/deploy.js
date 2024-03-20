@@ -26,7 +26,7 @@ async function main() {
   config = await deployToken();
   config = await deployProxy('guard', 'GuardV0');
   config = await deployProxy('nftreward', 'NFTRewardV0');
-  config = await deployProxy('nft', 'NFTV0', ['Dev NFT', 'DEVNFT']);
+  config = await deployProxy('nft', 'NFTV0', ['Minertopia Citizen', 'MINERTOPIA']);
   config = await deployProxy('pool', 'PoolV0');
   config = await deployProxy('vault', 'VaultV0');
   console.log(config);
@@ -45,7 +45,7 @@ async function deployProxy(configName, scName, params) {
   const SC = await ethers.getContractFactory(scName);
   const sc = await upgrades.deployProxy(SC, params);
   await sc.deployed();
-  console.log(scName + ' deployed..');
+  console.log(scName + ' deployed at: ' + sc.address);
   config[configName] = sc.address;
   await jsonfile.writeFile(path, config);
   await delay(delayMS);
@@ -54,8 +54,8 @@ async function deployProxy(configName, scName, params) {
 
 async function deployToken() {
   const config = await jsonfile.readFile(path);
-  const tokenName = "Dev Coin";
-  const tokenSymbol = "DVC";
+  const tokenName = "Minertopia Token";
+  const tokenSymbol = "MTK";
   const bankAddress = config.bank;
   const Token = await ethers.getContractFactory("Token");
   const token = await Token.deploy(bankAddress, tokenName, tokenSymbol);
@@ -74,14 +74,15 @@ async function deployToken() {
 // fork
 // use nodejs v18
 // npx hardhat compile
-// npx hardhat run --network fork scripts/deploy.js
-// npx hardhat run --network fork scripts/update.js
-// npx hardhat run --network fork scripts/setup.js
+// npx hardhat run --network btctest scripts/deploy.js
+// npx hardhat run --network btctest scripts/update.js
+// npx hardhat run --network btctest scripts/setup.js
 // copy config.js & json(s)
 // node init.js
 // node bot.js
 
 // npx hardhat flatten contracts/Token.sol > Token.sol
+// notes: nft price & initial liquidity
 
 
 

@@ -58,7 +58,7 @@ contract PoolV1 is Initializable, OwnableUpgradeable {
         uint interest = msg.value;
         if (interest == 0) {
             require(
-                block.timestamp < (lastPumpPriceTime + (3600 * 1)),
+                (block.timestamp - lastPumpPriceTime) >= 3600,
                 "invalid time"
             );
             require(divider >= 1, "no session");

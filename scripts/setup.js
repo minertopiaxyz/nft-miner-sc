@@ -31,8 +31,8 @@ async function getSC(scName, scAddr) {
 
 async function setupBank() {
   const bank = await getSC("BankV1", addr.bank);
-  const amountCoin = eth2wei('1');
-  const amountToken = eth2wei('1000000');
+  const amountCoin = eth2wei('0.0001');
+  const amountToken = eth2wei('10000');
   const tx = await bank.setup(amountToken, addr.token, addr.pool, { value: amountCoin });
   console.log(tx.hash);
   await tx.wait();
@@ -52,10 +52,14 @@ async function setupNFTReward() {
 }
 
 async function setupNFT() {
+  const price = eth2wei('0.0001');
+  const maxSupply = '3333';
   const nft = await getSC("NFTV1", addr.nft);
   const tx = await nft.setup(
     addr.pool,
-    addr.nftreward
+    addr.nftreward,
+    price,
+    maxSupply
   );
   console.log(tx.hash);
   await tx.wait();
