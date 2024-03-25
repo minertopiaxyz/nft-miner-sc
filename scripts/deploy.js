@@ -74,9 +74,9 @@ async function deployToken() {
 // fork
 // use nodejs v18
 // npx hardhat compile
-// npx hardhat run --network btctest scripts/deploy.js
-// npx hardhat run --network btctest scripts/update.js
-// npx hardhat run --network btctest scripts/setup.js
+// npx hardhat run --network cantotest scripts/deploy.js
+// npx hardhat run --network cantotest scripts/update.js
+// npx hardhat run --network cantotest scripts/setup.js
 // copy config.js & json(s)
 // node init.js
 // node bot.js

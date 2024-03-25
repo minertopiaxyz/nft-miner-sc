@@ -27,7 +27,7 @@ task("flat", "Flattens and prints contracts and their dependencies (Resolves lic
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.18",
+  solidity: "0.8.24",
   etherscan: {
     // Your API key for Etherscan
     // Obtain one at https://bscscan.com/
@@ -35,10 +35,10 @@ module.exports = {
   },
   settings: {
     // evmVersion: "paris"
-    // optimizer: {
-    //   enabled: true,
-    //   runs: 200
-    // }
+    optimizer: {
+      enabled: true,
+      runs: 200
+    }
   },
   defaultNetwork: "test",
   networks: {
@@ -68,7 +68,7 @@ module.exports = {
       accounts: [PRIVATEKEY_MAINNET]
     },
     shatest: {
-      url: "https://rpc2-sphinx.shardeum.org",
+      url: "https://sphinx.shardeum.org",
       chainId: 8082,
       accounts: [PRIVATEKEY_MAINNET],
     },
@@ -83,8 +83,13 @@ module.exports = {
       accounts: [PRIVATEKEY_MAINNET],
     },
     taratest: {
-      url: "https://rpc.testnet.taraxa.io",
+      url: "https://rpc.testnet.taraxa.io/",
       chainId: 842,
+      accounts: [PRIVATEKEY_MAINNET],
+    },
+    arbtest: {
+      url: "https://sepolia-rollup.arbitrum.io/rpc",
+      chainId: 421614,
       accounts: [PRIVATEKEY_MAINNET],
     },
   }
